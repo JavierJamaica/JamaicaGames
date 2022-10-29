@@ -1,0 +1,23 @@
+<ListaPeliculas>
+  <DatosPelicula>
+    <id>1</id>
+    <nombre>Matrix</nombre>
+    <director>No se :c</director>
+    <genero>Accion</genero>
+    <anyo>2001</anyo>
+  </DatosPelicula>
+  <DatosPelicula>
+    <id>2</id>
+    <nombre>jjajaja no se me ocurren que raro</nombre>
+    <director>Nosex2</director>
+    <genero>romance</genero>
+    <anyo>2121</anyo>
+  </DatosPelicula>
+  <DatosPelicula>
+    <id>3</id>
+    <nombre>Bullet train</nombre>
+    <director>David Leitch</director>
+    <genero>Accion</genero>
+    <anyo>2022</anyo>
+  </DatosPelicula>
+</ListaPeliculas>

@@ -1,0 +1,26 @@
+<ListaUsuarios>
+  <DatosUsuario>
+    <id>1</id>
+    <nombre>Javier</nombre>
+    <contraseya>1234</contraseya>
+    <privilegios>Admin</privilegios>
+  </DatosUsuario>
+  <DatosUsuario>
+    <id>2</id>
+    <nombre>Vor</nombre>
+    <contraseya>12345</contraseya>
+    <privilegios>Admin</privilegios>
+  </DatosUsuario>
+  <DatosUsuario>
+    <id>3</id>
+    <nombre>Juan</nombre>
+    <contraseya>abcde</contraseya>
+    <privilegios>Usuario</privilegios>
+  </DatosUsuario>
+  <DatosUsuario>
+    <id>4</id>
+    <nombre>Josue</nombre>
+    <contraseya>123</contraseya>
+    <privilegios>Admin</privilegios>
+  </DatosUsuario>
+</ListaUsuarios>

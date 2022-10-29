@@ -1,11 +1,18 @@
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Javier Jamaica
  * 28/10/2022
  */
 public class Pelicula implements Serializable {
+    private static final long serialVersionUID = -2115749393533822256L;
+
     private int id;
     private String nombre;
     private String director;
@@ -338,6 +345,56 @@ public class Pelicula implements Serializable {
         fileOut.close();
         fileInAux.close();
 
+    }
+
+    public static void crearXmlPelicula() throws IOException {
+        File fichero = new File(".//Ficheros/Peliculas.dat");
+        FileInputStream fileIn = new FileInputStream(fichero);
+
+        MyInputObjectStream dataIS = new MyInputObjectStream(fileIn);
+        System.out.println("Comienza el proceso de creacion a XML..");
+        ListaPeliculas listaP = new ListaPeliculas();
+        try {
+            while (true) {
+                Pelicula pelicula = (Pelicula) dataIS.readObject();
+                listaP.add(pelicula);
+            }
+        } catch (EOFException e) {
+            System.out.println("Fichero leido");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        dataIS.close();
+        try {
+            XStream xStream = new XStream();
+            xStream.alias("ListaPeliculas", ListaPeliculas.class);
+            xStream.alias("DatosPelicula", Pelicula.class);
+            xStream.addImplicitCollection(ListaPeliculas.class, "lista");
+            xStream.toXML(listaP, new FileOutputStream(".//FicherosXML/Peliculas.xml"));
+            System.out.println("Creado fichero xml...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void leerXmlPelicula() throws FileNotFoundException {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+        xStream.alias("ListaPeliculas", ListaPeliculas.class);
+
+        xStream.alias("DatosPelicula", Pelicula.class);
+        xStream.addImplicitCollection(ListaPeliculas.class, "lista");
+
+        FileInputStream fichero = new FileInputStream(".//FicherosXML/Peliculas.xml");
+        ListaPeliculas lista = (ListaPeliculas) xStream.fromXML(fichero);
+        System.out.println("Numero de peliculas: " + lista.getListaPeliculas().size());
+        List<Pelicula> listaPeliculas = new ArrayList<>();
+        listaPeliculas = lista.getListaPeliculas();
+        for (Pelicula pelicula : listaPeliculas) {
+            System.out.printf("Id: %s, Nombre: %s, Director: %s, Genero: %s, Año: %s %n", pelicula.getId(), pelicula.getNombre(), pelicula.getDirector(), pelicula.getGenero(), pelicula.getAnyo());
+        }
+        System.out.println("Fin del listado....");
     }
 
 }

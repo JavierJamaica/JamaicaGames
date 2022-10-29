@@ -333,9 +333,7 @@ public class Juego implements Serializable {
         System.out.println("Numero de juegos: " + lista.getListaJuegos().size());
         List<Juego> listaJuegos = new ArrayList<>();
         listaJuegos = lista.getListaJuegos();
-        Iterator iterator = listaJuegos.listIterator();
-        while (iterator.hasNext()) {
-            Juego juego = (Juego) iterator.next();
+        for (Juego juego : listaJuegos) {
             System.out.printf("Id: %s, Nombre: %s, Año: %s, Puntuacion: %s %n", juego.getId(), juego.getNombre(), juego.getAnyo(), juego.getPuntuacion());
         }
         System.out.println("Fin del listado....");

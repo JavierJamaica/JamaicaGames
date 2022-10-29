@@ -1,12 +1,17 @@
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Javier Jamaica
  * 28/10/2022
  */
 public class Cancion implements Serializable {
-
+    private static final long serialVersionUID = -8291835848771634014L;
     private int id;
     private String nombre;
     private String autor;
@@ -338,6 +343,56 @@ public class Cancion implements Serializable {
         fileOut.close();
         fileInAux.close();
 
+    }
+
+    public static void crearXmlCancion() throws IOException {
+        File fichero = new File(".//Ficheros/Canciones.dat");
+        FileInputStream fileIn = new FileInputStream(fichero);
+
+        MyInputObjectStream dataIS = new MyInputObjectStream(fileIn);
+        System.out.println("Comienza el proceso de creacion a XML..");
+        ListaCanciones listaP = new ListaCanciones();
+        try {
+            while (true) {
+                Cancion cancion = (Cancion) dataIS.readObject();
+                listaP.add(cancion);
+            }
+        } catch (EOFException e) {
+            System.out.println("Fichero leido");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        dataIS.close();
+        try {
+            XStream xStream = new XStream();
+            xStream.alias("ListaCanciones", ListaCanciones.class);
+            xStream.alias("DatosCanciones", Cancion.class);
+            xStream.addImplicitCollection(ListaCanciones.class, "lista");
+            xStream.toXML(listaP, new FileOutputStream(".//FicherosXML/Canciones.xml"));
+            System.out.println("Creado fichero xml...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void leerXmlCancion() throws FileNotFoundException {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+        xStream.alias("ListaCanciones", ListaCanciones.class);
+
+        xStream.alias("DatosCanciones", Cancion.class);
+        xStream.addImplicitCollection(ListaCanciones.class, "lista");
+
+        FileInputStream fichero = new FileInputStream(".//FicherosXML/Canciones.xml");
+        ListaCanciones lista = (ListaCanciones) xStream.fromXML(fichero);
+        System.out.println("Numero de canciones: " + lista.getListaCanciones().size());
+        List<Cancion> listaCanciones = new ArrayList<>();
+        listaCanciones = lista.getListaCanciones();
+        for (Cancion cancion : listaCanciones) {
+            System.out.printf("Id: %s, Nombre: %s, Autor: %s, Genero: %s, Año: %s %n", cancion.getId(), cancion.getNombre(), cancion.getAutor(), cancion.getGenero(), cancion.getAnyo());
+        }
+        System.out.println("Fin del listado....");
     }
 
 

@@ -1,0 +1,16 @@
+<ListaCanciones>
+  <DatosCanciones>
+    <id>1</id>
+    <nombre>Enamorate de alguien mas</nombre>
+    <autor>Morat</autor>
+    <genero>Romance</genero>
+    <anyo>20021</anyo>
+  </DatosCanciones>
+  <DatosCanciones>
+    <id>2</id>
+    <nombre>Malas</nombre>
+    <autor>Don tetto</autor>
+    <genero>Rock</genero>
+    <anyo>2002</anyo>
+  </DatosCanciones>
+</ListaCanciones>

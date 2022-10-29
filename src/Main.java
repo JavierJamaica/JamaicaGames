@@ -1,8 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Main {
@@ -17,11 +14,10 @@ public class Main {
         int opcionModificar2;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Binevenido! inicia sesion para continuar:");
+        System.out.println("Bienvenido! inicia sesion para continuar:");
 
         System.out.print("Usuario: ");
         String usuarioSesion = br.readLine();
-        System.out.print("Contraseña: ");
         JOptionPane.showConfirmDialog(null, jpf, "Contraseña: ", JOptionPane.OK_CANCEL_OPTION);
         String contra = new String(jpf.getPassword());
 
@@ -36,7 +32,8 @@ public class Main {
                                 2. Peliculas\s
                                 3. Musica\s
                                 4. Xml\s
-                                5. Salir\s
+                                5. Usuarios\s
+                                6. Salir\s
                                 """);
                         System.out.print("Opcion: ");
                         opcion = Integer.parseInt(br.readLine());
@@ -390,7 +387,8 @@ public class Main {
                                                             1. Juegos
                                                             2. Peliculas
                                                             3. Musica
-                                                            4. Atras
+                                                            4. Usuarios
+                                                            5. Atras
                                                             """);
                                                     System.out.print("Opcion: ");
                                                     opcionXmlJuegos = Integer.parseInt(br.readLine());
@@ -400,19 +398,23 @@ public class Main {
                                                             Juego.crearXmlJuego();
                                                             break;
                                                         case 2:
-                                                            System.out.println("FuncionXmlPeliculas");
+                                                            Pelicula.crearXmlPelicula();
                                                             break;
                                                         case 3:
-                                                            System.out.println("FuncionXmlMusica");
+                                                            Cancion.crearXmlCancion();
                                                             break;
                                                         case 4:
+                                                            Usuario.crearXmlUsuario();
+                                                            break;
+                                                        case 5:
                                                             break;
                                                         default:
+                                                            System.out.println("Tiene que ser una opcion valida");
                                                             break;
                                                     }
 
 
-                                                } while (opcionXmlJuegos != 4);
+                                                } while (opcionXmlJuegos != 5);
                                                 break;
                                             case 2:
                                                 int opcionXmlLeerJuegos = 0;
@@ -422,29 +424,51 @@ public class Main {
                                                             1. Juegos
                                                             2. Peliculas
                                                             3. Musica
-                                                            4. Atras
+                                                            4. Usuarios
+                                                            5. Atras
                                                             """);
                                                     System.out.print("Opcion: ");
                                                     opcionXmlLeerJuegos = Integer.parseInt(br.readLine());
 
                                                     switch (opcionXmlLeerJuegos) {
                                                         case 1:
-                                                            Juego.leerXmlJuego();
+                                                            try {
+                                                                Juego.leerXmlJuego();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("Fichero xml no existe");
+                                                            }
                                                             break;
                                                         case 2:
-                                                            System.out.println("FuncionXmlPeliculas");
+                                                            try {
+                                                                Pelicula.leerXmlPelicula();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("Fichero xml no existe");
+                                                            }
                                                             break;
                                                         case 3:
-                                                            System.out.println("FuncionXmlMusica");
+                                                            try {
+                                                                Cancion.leerXmlCancion();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("Ficherso xml no existe");
+                                                            }
+
                                                             break;
                                                         case 4:
+                                                            try {
+                                                                Usuario.leerXmlUsuario();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("Ficdhero xml no existe");
+                                                            }
+
+                                                            break;
+                                                        case 5:
                                                             break;
                                                         default:
                                                             break;
                                                     }
 
 
-                                                } while (opcionXmlLeerJuegos != 4);
+                                                } while (opcionXmlLeerJuegos != 5);
                                                 break;
                                             case 3:
                                                 break;
@@ -459,7 +483,108 @@ public class Main {
                                 } while (opcionXml != 3);
 
                             case 5:
+                                do {
+                                    System.out.print("""
+                                            Bienvenido al menu de usuarios, que deseas hacer?\s
+                                            1. Ver lista de usuarios\s
+                                            2. Agregar usuario\s
+                                            3. Modificar usuario\s
+                                            4. Borrar usuario\s
+                                            5. Atras\s
+                                            """);
+                                    try {
+                                        System.out.print("Opcion: ");
+                                        opcionJuego = Integer.parseInt(br.readLine());
+                                        switch (opcionJuego) {
+                                            case 1:
+                                                try {
+                                                    Usuario.leerUsuarios();
+                                                } catch (FileNotFoundException e) {
+                                                    System.out.println("No existe el fichero o no hay datos");
+                                                    break;
+                                                }
+                                                break;
+                                            case 2:
+                                                System.out.println("Escribe el id del usuario: ");
+                                                int id = Integer.parseInt(br.readLine());
+                                                System.out.println("Escribe el nombre del usuario: ");
+                                                String nombre = br.readLine();
+                                                System.out.println("Escribe la contraseña del usuario: ");
+                                                String contraseya = br.readLine();
+                                                System.out.println("Escribe los privilegios: ");
+                                                String privilegios = br.readLine();
+                                                Usuario.escribirUsuario(id, nombre, contraseya, privilegios);
+                                                break;
+                                            case 3:
+                                                do {
+                                                    try {
+                                                        Usuario.leerUsuarios();
+                                                    } catch (FileNotFoundException e) {
+                                                        System.out.println("No existe el fichero o no hay datos");
+                                                        break;
+                                                    }
+                                                    System.out.println("Cual usuario quieres modificar ");
+                                                    System.out.print("Opcion: ");
+                                                    int opcionModificar = Integer.parseInt(br.readLine());
 
+
+                                                    System.out.print("""
+                                                            Que deseas modificar?\s
+                                                             1. Nombre\s
+                                                             2. Contraseña\s
+                                                             3. Privilegios
+                                                             4. Atras\s
+                                                            """);
+                                                    System.out.println("Opcion: ");
+                                                    opcionModificar2 = Integer.parseInt(br.readLine());
+                                                    switch (opcionModificar2) {
+                                                        case 1 -> {
+                                                            System.out.println("Escribe el nuevo nombre: ");
+                                                            String nuevoNom = br.readLine();
+                                                            Usuario.modificarUsuarioNombre(opcionModificar, nuevoNom);
+                                                        }
+                                                        case 2 -> {
+                                                            System.out.println("Escribe la nueva contraseña: ");
+                                                            String nuevaContra = br.readLine();
+                                                            Usuario.modificarContra(opcionModificar, nuevaContra);
+                                                        }
+                                                        case 3 -> {
+                                                            System.out.println("Escribe el nuevo privilegio: ");
+                                                            String nuevoPriv = br.readLine();
+                                                            Usuario.modificarPrivilegios(opcionModificar, nuevoPriv);
+                                                        }
+                                                        default -> {
+                                                        }
+                                                    }
+
+                                                } while (opcionModificar2 != 4);
+
+                                                break;
+                                            case 4:
+
+                                                try {
+                                                    Usuario.leerUsuarios();
+                                                } catch (FileNotFoundException e) {
+                                                    System.out.println("No existe el fichero o no hay datos");
+                                                    break;
+                                                }
+                                                System.out.println("Cual deseas eliminar?");
+                                                System.out.print("Opcion: ");
+                                                int usuBorrar = Integer.parseInt(br.readLine());
+                                                Usuario.borrarUsuario(usuBorrar);
+                                                break;
+                                            default:
+                                                System.out.println("Tiene que ser una opcion valida");
+                                                break;
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Error tiene que ser un numero!");
+                                    } catch (ClassNotFoundException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                } while (opcionJuego != 5);
+                            case 6:
+                                break;
                             default:
                                 break;
                         }
@@ -467,7 +592,7 @@ public class Main {
                     } catch (NumberFormatException e) {
                         System.out.println("Tiene que ser un numero!");
                     }
-                } while (opcion != 5);
+                } while (opcion != 6);
             } else {
                 do {
                     try {
@@ -841,10 +966,10 @@ public class Main {
                                                             Juego.crearXmlJuego();
                                                             break;
                                                         case 2:
-                                                            System.out.println("FuncionXmlPeliculas");
+                                                            Pelicula.crearXmlPelicula();
                                                             break;
                                                         case 3:
-                                                            System.out.println("FuncionXmlMusica");
+                                                            Cancion.crearXmlCancion();
                                                             break;
                                                         case 4:
                                                             break;
@@ -870,13 +995,28 @@ public class Main {
 
                                                     switch (opcionXmlLeerJuegos) {
                                                         case 1:
-                                                            Juego.leerXmlJuego();
+                                                            try {
+                                                                Juego.leerXmlJuego();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("Fichero xml no existe");
+                                                            }
+
                                                             break;
                                                         case 2:
-                                                            System.out.println("FuncionXmlPeliculas");
+                                                            try {
+                                                                Pelicula.leerXmlPelicula();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("No existe el fichero xml");
+                                                            }
+
                                                             break;
                                                         case 3:
-                                                            System.out.println("FuncionXmlMusica");
+                                                            try {
+                                                                Cancion.leerXmlCancion();
+                                                            } catch (FileNotFoundException e) {
+                                                                System.out.println("No existe el fichero xml");
+                                                            }
+
                                                             break;
                                                         case 4:
                                                             break;
