@@ -5,7 +5,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+/**
+ * @author Javier Jamaica
+ * 28/10/2022
+ */
 public class Usuario implements Serializable {
     private static final long serialVersionUID = -7550656432867949133L;
     private int id;
