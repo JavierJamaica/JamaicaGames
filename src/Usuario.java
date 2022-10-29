@@ -10,13 +10,17 @@ import java.util.List;
  * 28/10/2022
  */
 public class Usuario implements Serializable {
+    // Serial UID para evitar el error de serializacion
     private static final long serialVersionUID = -7550656432867949133L;
+
+    // Atributos de la clase usuario
     private int id;
     private String nombre;
     private String contraseya;
 
     private String privilegios;
 
+    // Constructor de la clase
     public Usuario(int id, String nombre, String contraseya, String privilegios) {
         this.id = id;
         this.nombre = nombre;
@@ -24,6 +28,7 @@ public class Usuario implements Serializable {
         this.privilegios = privilegios;
     }
 
+    // Getter y Setter de la clase
     public int getId() {
         return id;
     }
@@ -65,6 +70,8 @@ public class Usuario implements Serializable {
                 "Privilegios: " + privilegios;
     }
 
+    // Funcion que usamos para escribir el fichero con la clase usuario
+
     public static void escribirUsuario(int id, String nombre, String contra, String privilegios) throws IOException {
         File fichero = new File(".//Ficheros/Usuarios.dat");
         FileOutputStream fileout = new FileOutputStream(fichero, true);
@@ -75,6 +82,7 @@ public class Usuario implements Serializable {
         System.out.println("Se escribio el usuario correctamente.");
     }
 
+// Funcion para leer el archivo .dat con los objetos de tipo usuario
 
     public static String leerListaUsuariosPriv(String nombreU, String contraseya) throws IOException, ClassNotFoundException {
         File fichero = new File(".//Ficheros/Usuarios.dat");
@@ -105,6 +113,8 @@ public class Usuario implements Serializable {
         return "";
     }
 
+    // Funcion para modificar el atributo nombre de la clase usuario
+
     public static boolean leerListaUsuarios(String nombreU, String contraseya) throws IOException, ClassNotFoundException {
         File fichero = new File(".//Ficheros/Usuarios.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -134,6 +144,8 @@ public class Usuario implements Serializable {
         return false;
     }
 
+    // Funcion para modificar el atributo nombre de la clase usuario
+
     public static void leerUsuarios() throws IOException, ClassNotFoundException {
         File fichero = new File(".//Ficheros/Usuarios.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -152,6 +164,7 @@ public class Usuario implements Serializable {
         dataIn.close();
     }
 
+    // Funcion para modificar el atributo nombre de la clase usuario
     public static void modificarUsuarioNombre(int opcionModificar, String nuevoNombre) throws IOException, ClassNotFoundException {
         Usuario usuarioMod;
         File fichero = new File(".//Ficheros/Usuarios.dat");
@@ -188,6 +201,8 @@ public class Usuario implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo contraseña de la clase usuario
+    
     public static void modificarContra(int opcionModificar, String nuevaContra) throws IOException, ClassNotFoundException {
         Usuario usuarioMod;
         File fichero = new File(".//Ficheros/Usuarios.dat");
@@ -224,6 +239,8 @@ public class Usuario implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo privilegio de la clase usuario
+    
     public static void modificarPrivilegios(int opcionModificar, String nuevoPriv) throws IOException, ClassNotFoundException {
         Usuario usuarioMod;
         File fichero = new File(".//Ficheros/Usuarios.dat");
@@ -261,6 +278,8 @@ public class Usuario implements Serializable {
 
     }
 
+    // Funcion para borrar una entrada de tipo usuario en el .dat
+    
     public static void borrarUsuario(int usuarioBorrar) throws IOException, ClassNotFoundException {
         Usuario usuarioB;
         ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -298,6 +317,8 @@ public class Usuario implements Serializable {
 
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
+    
     public static void crearNuevoUsuarioBorrar() throws IOException {
         Usuario usuarioB;
 
@@ -328,6 +349,8 @@ public class Usuario implements Serializable {
         fileInAux.close();
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
+    
     public static void crearNuevoUsuarioMod() throws IOException {
         Usuario usuarioMod;
 
@@ -355,6 +378,8 @@ public class Usuario implements Serializable {
 
     }
 
+    // Funcion para crear un xml apartir del fichero usuarios.dat
+    
     public static void crearXmlUsuario() throws IOException {
         File fichero = new File(".//Ficheros/Usuarios.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -386,6 +411,8 @@ public class Usuario implements Serializable {
         }
     }
 
+    // Funcion para leer el archivo xml y luego mostrarlo como una lista de objetos de tipo usuario
+    
     public static void leerXmlUsuario() throws FileNotFoundException {
         XStream xStream = new XStream();
         xStream.addPermission(AnyTypePermission.ANY);

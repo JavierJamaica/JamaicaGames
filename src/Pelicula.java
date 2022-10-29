@@ -11,13 +11,17 @@ import java.util.List;
  * 28/10/2022
  */
 public class Pelicula implements Serializable {
+    // Serial UID para evitar el error de serializacion
     private static final long serialVersionUID = -2115749393533822256L;
 
+    // Atributos de la clase pelicula
     private int id;
     private String nombre;
     private String director;
     private String genero;
     private int anyo;
+
+    // Constructor de la clase
 
     public Pelicula(int id, String nombre, String director, String genero, int anyo) {
         this.id = id;
@@ -26,6 +30,8 @@ public class Pelicula implements Serializable {
         this.genero = genero;
         this.anyo = anyo;
     }
+
+    // Getter y Setter de la clase
 
     public int getId() {
         return id;
@@ -75,7 +81,7 @@ public class Pelicula implements Serializable {
                 "Genero: " + genero + "\n" + "Año: " + anyo + "\n" + "-----------------------";
     }
 
-
+    // Funcion que usamos para escribir el fichero con la clase pelicula
     public static void escribirPelicula(int id, String nombre, String director, String genero, int anyo) throws IOException {
         File fichero = new File(".//Ficheros/Peliculas.dat");
         FileOutputStream fileout = new FileOutputStream(fichero, true);
@@ -86,6 +92,7 @@ public class Pelicula implements Serializable {
         System.out.println("Se escribio la pelicula correctamente.");
     }
 
+    // Funcion para leer el archivo .dat con los objetos de tipo pelicula
     public static void leerListaPelicula() throws IOException, ClassNotFoundException {
         File fichero = new File(".//Ficheros/Peliculas.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -104,6 +111,7 @@ public class Pelicula implements Serializable {
         dataIn.close();
     }
 
+    // Funcion para modificar el atributo nombre de la clase pelicula
     public static void modificarPeliculaNombre(int opcionModificar, String nuevoNombre) throws IOException, ClassNotFoundException {
         Pelicula peliculaMod;
         File fichero = new File(".//Ficheros/Peliculas.dat");
@@ -141,6 +149,7 @@ public class Pelicula implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo genero de la clase pelicula
     public static void modificarPeliculaGenero(int opcionModificar, String nuevoGenero) throws IOException, ClassNotFoundException {
         Pelicula peliculaMod;
         File fichero = new File(".//Ficheros/Peliculas.dat");
@@ -178,6 +187,7 @@ public class Pelicula implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo anyo de la clase pelicula
     public static void modificarPeliculaAnyo(int opcionModificar, int nuevoAnyo) throws IOException, ClassNotFoundException {
         Pelicula peliculaMod;
         File fichero = new File(".//Ficheros/Peliculaes.dat");
@@ -215,6 +225,7 @@ public class Pelicula implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo director de la clase pelicula
     public static void modificarPeliculaDirector(int opcionModificar, String nuevoDirector) throws IOException, ClassNotFoundException {
         Pelicula peliculaMod;
         File fichero = new File(".//Ficheros/Peliculas.dat");
@@ -253,6 +264,7 @@ public class Pelicula implements Serializable {
 
     }
 
+    // Funcion para borrar una entrada de tipo pelicula en el .dat
     public static void borrarPelicula(int peliculaBorrar) throws IOException, ClassNotFoundException {
         Pelicula peliculaB;
         ArrayList<Pelicula> peliculaes = new ArrayList<>();
@@ -289,6 +301,7 @@ public class Pelicula implements Serializable {
 
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
     public static void crearNuevaPeliculaBorrar() throws IOException {
         Pelicula peliculaB;
 
@@ -320,6 +333,7 @@ public class Pelicula implements Serializable {
         fileInAux.close();
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
     public static void crearNuevaPeliculaMod() throws IOException {
         Pelicula peliculaMod;
 
@@ -347,6 +361,7 @@ public class Pelicula implements Serializable {
 
     }
 
+    // Funcion para crear un xml apartir del fichero peliculas.dat
     public static void crearXmlPelicula() throws IOException {
         File fichero = new File(".//Ficheros/Peliculas.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -378,6 +393,7 @@ public class Pelicula implements Serializable {
         }
     }
 
+    // Funcion para leer el archivo xml y luego mostrarlo como una lista de objetos de tipo pelicula
     public static void leerXmlPelicula() throws FileNotFoundException {
         XStream xStream = new XStream();
         xStream.addPermission(AnyTypePermission.ANY);

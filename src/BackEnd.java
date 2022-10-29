@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
  * 29/10/2022
  */
 public class BackEnd {
+    // Funcion principal que hace toda la parte del programa
     public static void todo() throws IOException, ClassNotFoundException {
         final JPasswordField jpf = new JPasswordField();
         int opcion = 0;

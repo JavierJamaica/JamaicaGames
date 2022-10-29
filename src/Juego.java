@@ -5,17 +5,23 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 /**
  * @author Javier Jamaica
  * 28/10/2022
  */
 public class Juego implements Serializable {
+    // Serial UID para evitar el error de serializacion
+
     private static final long serialVersionUID = 1235495732780724037L;
 
+    // Atributos de la clase juego
     private int id;
     private String nombre;
     private int anyo;
     private int puntuacion;
+
+    // Constructor de la clase
 
     public Juego(int id, String nombre, int anyo, int puntuacion) {
         this.id = id;
@@ -23,6 +29,8 @@ public class Juego implements Serializable {
         this.anyo = anyo;
         this.puntuacion = puntuacion;
     }
+
+    // Getter y Setter de la clase
 
     public int getId() {
         return id;
@@ -61,6 +69,8 @@ public class Juego implements Serializable {
         return "-----------------------\n" + "Juego: \n" + "Id: " + id + "\n" + "Nombre: " + nombre + "\n" + "Año: " + anyo + "\n" + "Puntuacion: " + puntuacion + "\n" + "-----------------------";
     }
 
+    // Funcion que usamos para escribir el fichero con la clase juego
+
     public static void escribirJuego(int id, String nombre, int anyo, int puntuacion) throws IOException {
         File fichero = new File(".//Ficheros/Juegos.dat");
         FileOutputStream fileout = new FileOutputStream(fichero, true);
@@ -70,6 +80,8 @@ public class Juego implements Serializable {
         dataOs.close();
         System.out.println("Se escribio el juego correctamente.");
     }
+
+    // Funcion para leer el archivo .dat con los objetos de tipo juego
 
     public static void leerLista() throws IOException, ClassNotFoundException {
         File fichero = new File(".//Ficheros/Juegos.dat");
@@ -88,6 +100,8 @@ public class Juego implements Serializable {
         }
         dataIn.close();
     }
+
+    // Funcion para modificar el atributo nombre de la clase juego
 
     public static void modificarJuegoNombre(int opcionModificar, String nuevoNombre) throws IOException, ClassNotFoundException {
         Juego juegoMod;
@@ -125,6 +139,7 @@ public class Juego implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo anyo de la clase juego
     public static void modificarJuegoAnyo(int opcionModificar, int nuevoAnyo) throws IOException, ClassNotFoundException {
         Juego juegoMod;
         File fichero = new File(".//Ficheros/Juegos.dat");
@@ -161,6 +176,7 @@ public class Juego implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo puntuacion
     public static void modificarPuntuacion(int opcionModificar, int nuevaPuntuacion) throws IOException, ClassNotFoundException {
         Juego juegoMod;
         File fichero = new File(".//Ficheros/Juegos.dat");
@@ -198,6 +214,7 @@ public class Juego implements Serializable {
 
     }
 
+    // Funcion para borrar una entrada de tipo juego en el .dat
     public static void borrarJuego(int juegoBorrar) throws IOException, ClassNotFoundException {
         Juego juegoB;
         ArrayList<Juego> juegos = new ArrayList<>();
@@ -235,6 +252,7 @@ public class Juego implements Serializable {
 
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
     public static void crearNuevoJuegoBorrar() throws IOException {
         Juego juegoB;
 
@@ -265,6 +283,7 @@ public class Juego implements Serializable {
         fileInAux.close();
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
     public static void crearNuevoJuegoMod() throws IOException {
         Juego juegoMod;
 
@@ -292,6 +311,7 @@ public class Juego implements Serializable {
 
     }
 
+    // Funcion para crear un xml apartir del fichero juegoes.dat
     public static void crearXmlJuego() throws IOException {
         File fichero = new File(".//Ficheros/Juegos.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -323,6 +343,7 @@ public class Juego implements Serializable {
         }
     }
 
+    // Funcion para leer el archivo xml y luego mostrarlo como una lista de objetos de tipo juego
     public static void leerXmlJuego() throws FileNotFoundException {
         XStream xStream = new XStream();
         xStream.addPermission(AnyTypePermission.ANY);

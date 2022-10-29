@@ -5,6 +5,7 @@ import java.util.List;
  * @author Javier Jamaica
  * 29/10/2022
  */
+// Clase que usamos para la creacion del xml de usuarios
 public class ListaUsuarios {
     private List<Usuario> lista = new ArrayList<>();
 

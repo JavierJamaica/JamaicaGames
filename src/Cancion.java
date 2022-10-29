@@ -11,13 +11,17 @@ import java.util.List;
  * 28/10/2022
  */
 public class Cancion implements Serializable {
+    // Serial UID para evitar el error de serializacion
     private static final long serialVersionUID = -8291835848771634014L;
+
+    // Atributos de la clase cancion
     private int id;
     private String nombre;
     private String autor;
     private String genero;
     private int anyo;
 
+    // Constructor de la clase
     public Cancion(int id, String nombre, String autor, String genero, int anyo) {
         this.id = id;
         this.nombre = nombre;
@@ -25,6 +29,8 @@ public class Cancion implements Serializable {
         this.genero = genero;
         this.anyo = anyo;
     }
+
+    // Getter y Setter de la clase
 
     public int getId() {
         return id;
@@ -75,16 +81,18 @@ public class Cancion implements Serializable {
                 "Genero: " + genero + "\n" + "Año: " + anyo + "\n" + "-----------------------";
     }
 
+    // Funcion que usamos para escribir el fichero con la clase cancion
     public static void escribirCancion(int id, String nombre, String autor, String genero, int anyo) throws IOException {
         File fichero = new File(".//Ficheros/Canciones.dat");
         FileOutputStream fileout = new FileOutputStream(fichero, true);
-        MyObjectOutputStream dataOs = new MyObjectOutputStream(fileout);
+        MyObjectOutputStream dataOs = new MyObjectOutputStream(fileout); // Cree una subclase de ObjectOutPutStream para evitar cabeceras de bytes
         Cancion cancion = new Cancion(id, nombre, autor, genero, anyo);
         dataOs.writeObject(cancion);
         dataOs.close();
         System.out.println("Se escribio la cancion correctamente.");
     }
 
+    // Funcion para leer el archivo .dat con los objetos de tipo cancion
     public static void leerListaCancion() throws IOException, ClassNotFoundException {
         File fichero = new File(".//Ficheros/Canciones.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -103,6 +111,7 @@ public class Cancion implements Serializable {
         dataIn.close();
     }
 
+    // Funciones para modificar cada atributo de la clase cancion del fichero .dat
     public static void modificarCancionNombre(int opcionModificar, String nuevoNombre) throws IOException, ClassNotFoundException {
         Cancion cancionMod;
         File fichero = new File(".//Ficheros/Canciones.dat");
@@ -110,7 +119,7 @@ public class Cancion implements Serializable {
         MyInputObjectStream dataIn = null;
         int cancionExiste = 0;
 
-        File ficheroAux = new File(".//Ficheros/CancionesAux.dat");
+        File ficheroAux = new File(".//Ficheros/CancionesAux.dat"); // Usamos un fichero auxiliar para escribir la modificacion
         FileOutputStream fileOutAux = new FileOutputStream(ficheroAux);
         MyObjectOutputStream dataOsAux = null;
 
@@ -134,13 +143,14 @@ public class Cancion implements Serializable {
 
         }
         if (cancionExiste > 0) {
-            crearNuevaCancionMod();
+            crearNuevaCancionMod(); // Con esta funcion reescribimos el fichero original con el fichero aux
             System.out.println("Se ha modificado la cancion pai");
         }
         dataIn.close();
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo cancion
     public static void modificarCancionGenero(int opcionModificar, String nuevoGenero) throws IOException, ClassNotFoundException {
         Cancion cancionMod;
         File fichero = new File(".//Ficheros/Canciones.dat");
@@ -178,6 +188,7 @@ public class Cancion implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo anyo
     public static void modificarCancionAnyo(int opcionModificar, int nuevoAnyo) throws IOException, ClassNotFoundException {
         Cancion cancionMod;
         File fichero = new File(".//Ficheros/Canciones.dat");
@@ -215,6 +226,7 @@ public class Cancion implements Serializable {
         dataOsAux.close();
     }
 
+    // Funcion para modificar el atributo autor
     public static void modificarCancionAutor(int opcionModificar, String nuevoAutor) throws IOException, ClassNotFoundException {
         Cancion cancionMod;
         File fichero = new File(".//Ficheros/Canciones.dat");
@@ -252,6 +264,7 @@ public class Cancion implements Serializable {
 
     }
 
+    // Funcion para borrar una entrada de tipo cancion en el .dat
     public static void borrarCancion(int cancionBorrar) throws IOException, ClassNotFoundException {
         Cancion cancionB;
         ArrayList<Cancion> canciones = new ArrayList<>();
@@ -259,7 +272,7 @@ public class Cancion implements Serializable {
         FileInputStream fileIn = new FileInputStream(fichero);
         MyInputObjectStream dataIn = null;
 
-        File ficheroAux = new File(".//Ficheros/CancionesAuxBorrar.dat");
+        File ficheroAux = new File(".//Ficheros/CancionesAuxBorrar.dat"); // Creamos un fichero auxiliar
         FileOutputStream fileOutAux = new FileOutputStream(ficheroAux);
         MyObjectOutputStream dataOsAux = new MyObjectOutputStream(fileOutAux);
         try {
@@ -275,7 +288,7 @@ public class Cancion implements Serializable {
                     dataOsAux.writeObject(cancion);
                 }
             }
-            crearNuevaCancionBorrar();
+            crearNuevaCancionBorrar(); // Usamos el auxiloar para reescribir dl original
             System.out.println("Se ha borrado de la lista");
             dataOsAux.close();
         } catch (EOFException e) {
@@ -287,6 +300,7 @@ public class Cancion implements Serializable {
 
     }
 
+    // Funcion que usmaos para escribir el fichero original con el auxiliar
     public static void crearNuevaCancionBorrar() throws IOException {
         Cancion cancionB;
 
@@ -318,6 +332,7 @@ public class Cancion implements Serializable {
         fileInAux.close();
     }
 
+    // Funcion que usamos para escribir el fichero original con el auxiliar
     public static void crearNuevaCancionMod() throws IOException {
         Cancion cancionMod;
 
@@ -345,6 +360,7 @@ public class Cancion implements Serializable {
 
     }
 
+    // Funcion para crear un xml apartir del fichero canciones.dat
     public static void crearXmlCancion() throws IOException {
         File fichero = new File(".//Ficheros/Canciones.dat");
         FileInputStream fileIn = new FileInputStream(fichero);
@@ -376,6 +392,7 @@ public class Cancion implements Serializable {
         }
     }
 
+    // Funcion para leer el archivo xml y luego mostrarlo como una lista de objetos de tipo cancion
     public static void leerXmlCancion() throws FileNotFoundException {
         XStream xStream = new XStream();
         xStream.addPermission(AnyTypePermission.ANY);
