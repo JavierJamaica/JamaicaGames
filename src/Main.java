@@ -10,6 +10,7 @@ public class Main {
         final JPasswordField jpf = new JPasswordField();
         int opcion = 0;
         int opcionJuego = 0;
+        int opcionXml = 0;
         int opcionModificar2;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -20,7 +21,8 @@ public class Main {
                         1. Juegos\s
                         2. Peliculas\s
                         3. Musica\s
-                        4. Salir\s
+                        4. Xml\s
+                        5. Salir\s
                         """);
                 System.out.print("Opcion: ");
                 opcion = Integer.parseInt(br.readLine());
@@ -45,6 +47,7 @@ public class Main {
                                             Juego.leerLista();
                                         } catch (FileNotFoundException e) {
                                             System.out.println("No existe el fichero o no hay datos");
+                                            break;
                                         }
                                         break;
                                     case 2:
@@ -60,7 +63,12 @@ public class Main {
                                         break;
                                     case 3:
                                         do {
-                                            Juego.leerLista();
+                                            try {
+                                                Juego.leerLista();
+                                            } catch (FileNotFoundException e) {
+                                                System.out.println("No existe el fichero o no hay datos");
+                                                break;
+                                            }
                                             System.out.println("Cual juego quieres modificar ");
                                             System.out.print("Opcion: ");
                                             int opcionModificar = Integer.parseInt(br.readLine());
@@ -100,7 +108,12 @@ public class Main {
                                         break;
                                     case 4:
 
-                                        Juego.leerLista();
+                                        try {
+                                            Juego.leerLista();
+                                        } catch (FileNotFoundException e) {
+                                            System.out.println("No existe el fichero o no hay datos");
+                                            break;
+                                        }
                                         System.out.println("Cual deseas eliminar?");
                                         System.out.print("Opcion: ");
                                         int juegoBorrar = Integer.parseInt(br.readLine());
@@ -121,10 +134,10 @@ public class Main {
                         do {
                             System.out.print("""
                                     Bienvenido al menu de peliculas, que deseas hacer?\s
-                                    1. Ver lista de juegos\s
-                                    2. Agregar juego\s
-                                    3. Modificar juego\s
-                                    4. Borrar juego\s
+                                    1. Ver lista de peliculas\s
+                                    2. Agregar pelicula\s
+                                    3. Modificar pelicula\s
+                                    4. Borrar pelicula\s
                                     5. Atras\s
                                     """);
                             try {
@@ -133,26 +146,34 @@ public class Main {
                                 switch (opcionJuego) {
                                     case 1:
                                         try {
-                                            Juego.leerLista();
+                                            Pelicula.leerListaPelicula();
                                         } catch (FileNotFoundException e) {
                                             System.out.println("No existe el fichero o no hay datos");
+                                            break;
                                         }
                                         break;
                                     case 2:
-                                        System.out.println("Escribe el id del juego: ");
+                                        System.out.println("Escribe el id de la pelicula: ");
                                         int id = Integer.parseInt(br.readLine());
-                                        System.out.println("Escribe el nombre del juego: ");
+                                        System.out.println("Escribe el nombre de la pelicula: ");
                                         String nombre = br.readLine();
-                                        System.out.println("Escribe el año del juego: ");
+                                        System.out.println("Escribe el nombre del director de la pelicula: ");
+                                        String director = br.readLine();
+                                        System.out.println("Escribe el genero de la pelicula: ");
+                                        String genero = br.readLine();
+                                        System.out.println("Escribe el año de la pelicula: ");
                                         int anyo = Integer.parseInt(br.readLine());
-                                        System.out.println("Escribe una puntuacion: ");
-                                        int puntuacion = Integer.parseInt(br.readLine());
-                                        Juego.escribirJuego(id, nombre, anyo, puntuacion);
+                                        Pelicula.escribirPelicula(id, nombre, director, genero, anyo);
                                         break;
                                     case 3:
                                         do {
-                                            Juego.leerLista();
-                                            System.out.println("Cual juego quieres modificar ");
+                                            try {
+                                                Pelicula.leerListaPelicula();
+                                            } catch (FileNotFoundException e) {
+                                                System.out.println("No existe el fichero o no hay datos");
+                                                break;
+                                            }
+                                            System.out.println("Cual pelicula quieres modificar ");
                                             System.out.print("Opcion: ");
                                             int opcionModificar = Integer.parseInt(br.readLine());
 
@@ -160,9 +181,10 @@ public class Main {
                                             System.out.print("""
                                                     Que deseas modificar?\s
                                                      1. Nombre\s
-                                                     2. Año\s
-                                                     3. Puntuacion
-                                                     4. Atras\s
+                                                     2. Director\s
+                                                     3. Genero\s
+                                                     4. Año\s
+                                                     5. Atras\s
                                                     """);
                                             System.out.println("Opcion: ");
                                             opcionModificar2 = Integer.parseInt(br.readLine());
@@ -170,32 +192,46 @@ public class Main {
                                                 case 1 -> {
                                                     System.out.println("Escribe el nuevo nombre: ");
                                                     String nuevoNom = br.readLine();
-                                                    Juego.modificarJuegoNombre(opcionModificar, nuevoNom);
+                                                    Pelicula.modificarPeliculaNombre(opcionModificar, nuevoNom);
                                                 }
                                                 case 2 -> {
-                                                    System.out.println("Escribe el nuevo año: ");
-                                                    int nuevoAnyo = Integer.parseInt(br.readLine());
-                                                    Juego.modificarJuegoAnyo(opcionModificar, nuevoAnyo);
+                                                    System.out.println("Escribe el nuevo director: ");
+                                                    String nuevoDirector = br.readLine();
+                                                    Pelicula.modificarPeliculaDirector(opcionModificar, nuevoDirector);
                                                 }
                                                 case 3 -> {
-                                                    System.out.println("Escribe la nueva puntuacion: ");
-                                                    int nuevaPuntuacion = Integer.parseInt(br.readLine());
-                                                    Juego.modificarPuntuacion(opcionModificar, nuevaPuntuacion);
+                                                    System.out.println("Escribe el nuevo genero: ");
+                                                    String nuevoGenero = br.readLine();
+                                                    Pelicula.modificarPeliculaGenero(opcionModificar, nuevoGenero);
+                                                }
+                                                case 4 -> {
+                                                    System.out.println("Escribe el nuevo año de la cancion: ");
+                                                    int nuevoAnyo = Integer.parseInt(br.readLine());
+                                                    Pelicula.modificarPeliculaAnyo(opcionModificar, nuevoAnyo);
+                                                }
+                                                case 5 -> {
+
                                                 }
                                                 default -> {
+                                                    System.out.println("Tiene que ser una opcion valida");
                                                 }
                                             }
 
-                                        } while (opcionModificar2 != 4);
+                                        } while (opcionModificar2 != 5);
 
                                         break;
                                     case 4:
 
-                                        Juego.leerLista();
+                                        try {
+                                            Pelicula.leerListaPelicula();
+                                        } catch (FileNotFoundException e) {
+                                            System.out.println("No existe el fichero o no hay datos");
+                                            break;
+                                        }
                                         System.out.println("Cual deseas eliminar?");
                                         System.out.print("Opcion: ");
-                                        int juegoBorrar = Integer.parseInt(br.readLine());
-                                        Juego.borrarJuego(juegoBorrar);
+                                        int peliculaBorrar = Integer.parseInt(br.readLine());
+                                        Pelicula.borrarPelicula(peliculaBorrar);
                                         break;
                                     default:
                                         System.out.println("Tiene que ser una opcion valida");
@@ -238,13 +274,17 @@ public class Main {
                                         String autor = br.readLine();
                                         System.out.println("Escribe el genero de la cancion: ");
                                         String genero = br.readLine();
-                                        System.out.println("Escribe el año del juego: ");
+                                        System.out.println("Escribe el año de la cancion: ");
                                         int anyo = Integer.parseInt(br.readLine());
                                         Cancion.escribirCancion(id, nombre, autor, genero, anyo);
                                         break;
                                     case 3:
                                         do {
-                                            Cancion.leerListaCancion();
+                                            try {
+                                                Cancion.leerListaCancion();
+                                            } catch (FileNotFoundException e) {
+                                                System.out.println("No existe el fichero o no hay datos");
+                                            }
                                             System.out.println("Cual cancion quieres modificar ");
                                             System.out.print("Opcion: ");
                                             int opcionModificar = Integer.parseInt(br.readLine());
@@ -268,8 +308,8 @@ public class Main {
                                                 }
                                                 case 2 -> {
                                                     System.out.println("Escribe el nuevo autor: ");
-                                                    String nuevoAnyo = br.readLine();
-                                                    Cancion.modificarCancionAutor(opcionModificar, nuevoAnyo);
+                                                    String nuevoAutor = br.readLine();
+                                                    Cancion.modificarCancionAutor(opcionModificar, nuevoAutor);
                                                 }
                                                 case 3 -> {
                                                     System.out.println("Escribe el nuevo genero: ");
@@ -294,7 +334,11 @@ public class Main {
                                         break;
                                     case 4:
 
-                                        Cancion.leerListaCancion();
+                                        try {
+                                            Cancion.leerListaCancion();
+                                        } catch (FileNotFoundException e) {
+                                            System.out.println("No existe el fichero o no hay datos");
+                                        }
                                         System.out.println("Cual deseas eliminar?");
                                         System.out.print("Opcion: ");
                                         int cancionBorrar = Integer.parseInt(br.readLine());
@@ -311,6 +355,67 @@ public class Main {
                             }
                         } while (opcionJuego != 5);
                         break;
+
+                    case 4:
+                        do {
+                            System.out.print("""
+                                    Bienvenido al menu XML, que deseas hacer?\s
+                                    1. Crear XML\s
+                                    2. Ver XMl\s
+                                    3. Atras\s
+                                    """);
+                            try {
+                                System.out.print("Opcion: ");
+                                opcionXml = Integer.parseInt(br.readLine());
+                                switch (opcionXml) {
+                                    case 1:
+                                        int opcionXmlJuegos = 0;
+                                        do {
+                                            System.out.print("""
+                                                    De que lo quieres crear?
+                                                    1. Juegos
+                                                    2. Peliculas
+                                                    3. Musica
+                                                    4. Atras
+                                                    """);
+                                            System.out.print("Opcion: ");
+                                            opcionXmlJuegos = Integer.parseInt(br.readLine());
+
+                                            switch (opcionXmlJuegos) {
+                                                case 1:
+                                                    System.out.println("FuncionXmlJuegos");
+                                                    break;
+                                                case 2:
+                                                    System.out.println("FuncionXmlPeliculas");
+                                                    break;
+                                                case 3:
+                                                    System.out.println("FuncionXmlMusica");
+                                                    break;
+                                                case 4:
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+
+
+                                        } while (opcionXmlJuegos != 4);
+                                        break;
+                                    case 2:
+                                        break;
+                                    case 3:
+                                        break;
+
+                                    default:
+                                        System.out.println("Tiene que ser una opcion valida");
+                                        break;
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Error tiene que ser un numero!");
+                            }
+                        } while (opcionXml != 3);
+
+                    case 5:
+
                     default:
                         break;
                 }
@@ -318,7 +423,8 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Tiene que ser un numero!");
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
+        System.out.println("Adios " + "\uD83D\uDE01");
 
 
     }

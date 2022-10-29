@@ -112,7 +112,13 @@ public class Cancion implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            cancionMod = (Cancion) dataIn.readObject();
+            try {
+                cancionMod = (Cancion) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
+
             if (cancionMod.getId() == opcionModificar) {
                 cancionMod.setNombre(nuevoNombre);
                 cancionExiste = 1;
@@ -144,7 +150,12 @@ public class Cancion implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            cancionMod = (Cancion) dataIn.readObject();
+            try {
+                cancionMod = (Cancion) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
             if (cancionMod.getId() == opcionModificar) {
                 cancionMod.setGenero(nuevoGenero);
                 cancionExiste = 1;
@@ -176,7 +187,12 @@ public class Cancion implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            cancionMod = (Cancion) dataIn.readObject();
+            try {
+                cancionMod = (Cancion) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
             if (cancionMod.getId() == opcionModificar) {
                 cancionMod.setAnyo(nuevoAnyo);
                 cancionExiste = 1;
@@ -208,7 +224,12 @@ public class Cancion implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            cancionMod = (Cancion) dataIn.readObject();
+            try {
+                cancionMod = (Cancion) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
             if (cancionMod.getId() == opcionModificar) {
                 cancionMod.setAutor(nuevoAutor);
                 cancionExiste = 1;
@@ -243,7 +264,6 @@ public class Cancion implements Serializable {
                 cancionB = (Cancion) dataIn.readObject();
                 canciones.add(cancionB);
             }
-
 
             for (Cancion cancion : canciones) {
                 if (cancion.getId() != cancionBorrar) {

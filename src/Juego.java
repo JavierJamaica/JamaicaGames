@@ -50,10 +50,7 @@ public class Juego implements Serializable {
 
     @Override
     public String toString() {
-        return "-----------------------\n" + "Juego: \n" + "Id: " + id + "\n" +
-                "Nombre: " + nombre + "\n" +
-                "Año: " + anyo + "\n" +
-                "Puntuacion: " + puntuacion + "\n" + "-----------------------";
+        return "-----------------------\n" + "Juego: \n" + "Id: " + id + "\n" + "Nombre: " + nombre + "\n" + "Año: " + anyo + "\n" + "Puntuacion: " + puntuacion + "\n" + "-----------------------";
     }
 
     public static void escribirJuego(int id, String nombre, int anyo, int puntuacion) throws IOException {
@@ -98,7 +95,12 @@ public class Juego implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            juegoMod = (Juego) dataIn.readObject();
+            try {
+                juegoMod = (Juego) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
             if (juegoMod.getId() == opcionModificar) {
                 juegoMod.setNombre(nuevoNombre);
                 juegoExiste = 1;
@@ -129,7 +131,12 @@ public class Juego implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            juegoMod = (Juego) dataIn.readObject();
+            try {
+                juegoMod = (Juego) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
             if (juegoMod.getId() == opcionModificar) {
                 juegoMod.setAnyo(nuevoAnyo);
                 juegoExiste = 1;
@@ -160,7 +167,12 @@ public class Juego implements Serializable {
         while (fileIn.available() != 0) {
             dataIn = new MyInputObjectStream((fileIn));
             dataOsAux = new MyObjectOutputStream(fileOutAux);
-            juegoMod = (Juego) dataIn.readObject();
+            try {
+                juegoMod = (Juego) dataIn.readObject();
+            } catch (EOFException e) {
+                System.out.println("No hay datos");
+                break;
+            }
             if (juegoMod.getId() == opcionModificar) {
                 juegoMod.setPuntuacion(nuevaPuntuacion);
                 juegoExiste = 1;
@@ -198,7 +210,7 @@ public class Juego implements Serializable {
 
 
             for (Juego juego : juegos) {
-                if(juego.getId() != juegoBorrar) {
+                if (juego.getId() != juegoBorrar) {
                     dataOsAux.writeObject(juego);
                 }
             }
