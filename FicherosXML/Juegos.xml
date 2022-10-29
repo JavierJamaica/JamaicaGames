@@ -1,0 +1,26 @@
+<ListaJuegos>
+  <DatosJuego>
+    <id>2</id>
+    <nombre>Mario bros</nombre>
+    <anyo>1998</anyo>
+    <puntuacion>1290</puntuacion>
+  </DatosJuego>
+  <DatosJuego>
+    <id>3</id>
+    <nombre>Halo</nombre>
+    <anyo>2002</anyo>
+    <puntuacion>2132</puntuacion>
+  </DatosJuego>
+  <DatosJuego>
+    <id>4</id>
+    <nombre>Zelda I</nombre>
+    <anyo>1987</anyo>
+    <puntuacion>13431</puntuacion>
+  </DatosJuego>
+  <DatosJuego>
+    <id>1</id>
+    <nombre>Call of duty</nombre>
+    <anyo>2008</anyo>
+    <puntuacion>12412</puntuacion>
+  </DatosJuego>
+</ListaJuegos>

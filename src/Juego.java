@@ -1,5 +1,10 @@
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Juego implements Serializable {
     private static final long serialVersionUID = 1235495732780724037L;
@@ -282,5 +287,57 @@ public class Juego implements Serializable {
         fileOut.close();
         fileInAux.close();
 
+    }
+
+    public static void crearXmlJuego() throws IOException {
+        File fichero = new File(".//Ficheros/Juegos.dat");
+        FileInputStream fileIn = new FileInputStream(fichero);
+
+        MyInputObjectStream dataIS = new MyInputObjectStream(fileIn);
+        System.out.println("Comienza el proceso de creacion a XML..");
+        ListaJuegos listaP = new ListaJuegos();
+        try {
+            while (true) {
+                Juego juego = (Juego) dataIS.readObject();
+                listaP.add(juego);
+            }
+        } catch (EOFException e) {
+            System.out.println("Fichero leido");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        dataIS.close();
+        try {
+            XStream xStream = new XStream();
+            xStream.alias("ListaJuegos", ListaJuegos.class);
+            xStream.alias("DatosJuego", Juego.class);
+            xStream.addImplicitCollection(ListaJuegos.class, "lista");
+            xStream.toXML(listaP, new FileOutputStream(".//FicherosXML/Juegos.xml"));
+            System.out.println("Creado fichero xml...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void leerXmlJuego() throws FileNotFoundException {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+        xStream.alias("ListaJuegos", ListaJuegos.class);
+
+        xStream.alias("DatosJuego", Juego.class);
+        xStream.addImplicitCollection(ListaJuegos.class, "lista");
+
+        FileInputStream fichero = new FileInputStream(".//FicherosXML/Juegos.xml");
+        ListaJuegos lista = (ListaJuegos) xStream.fromXML(fichero);
+        System.out.println("Numero de juegos: " + lista.getListaJuegos().size());
+        List<Juego> listaJuegos = new ArrayList<>();
+        listaJuegos = lista.getListaJuegos();
+        Iterator iterator = listaJuegos.listIterator();
+        while (iterator.hasNext()) {
+            Juego juego = (Juego) iterator.next();
+            System.out.printf("Id: %s, Nombre: %s, Año: %s, Puntuacion: %s %n", juego.getId(), juego.getNombre(), juego.getAnyo(), juego.getPuntuacion());
+        }
+        System.out.println("Fin del listado....");
     }
 }
